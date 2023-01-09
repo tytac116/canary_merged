@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from opencanary_correlator.common.logs import logger
 
 def send_email(from_='notifications@opencanary.org', to='', subject='', message='', server='', port=25):
-    logger.debug('Emailing %s' % to)
+    logger.debug('Emailing {}'.format(to))  # Added .format() method for string formatting
     if not server:
         return
 
@@ -18,11 +18,10 @@ def send_email(from_='notifications@opencanary.org', to='', subject='', message=
     s = smtplib.SMTP(server, port)
     try:
         s.sendmail(from_, [to], msg.as_string())
-        logger.info('Email sent to %s' % (to))
-    except Exception as e:
-        logger.error('Email sending produced exception %r' % e)
+        logger.info('Email sent to {}'.format(to))  # Added .format() method for string formatting
+    except Exception as e:  # Replaced Exception, e with Exception as e
+        logger.error('Email sending produced exception {}'.format(e))  # Added .format() method for string formatting
     s.quit()
-
 
 def mandrill_send(to=None, subject=None, message=None, reply_to=None):
     try:
@@ -42,5 +41,5 @@ def mandrill_send(to=None, subject=None, message=None, reply_to=None):
 
         result = mandrill_client.messages.send(message=message, async=False, ip_pool='Main Pool')
 
-    except mandrill.Error, e:
-        print 'A mandrill error occurred: %s - %s' % (e.__class__, e)
+    except mandrill.Error as e:  # Replaced mandrill.Error, e with mandrill.Error as e
+        print('A mandrill error occurred: {} - {}'.format(e.__class__, e))  # Added .format() method for string formatting
