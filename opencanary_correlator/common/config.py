@@ -12,7 +12,7 @@ class Config:
             self.__config = json.load(f)
 
     def moduleEnabled(self, module_name):
-        k = "%s.enabled" % module_name
+        k = "{}.enabled".format(module_name)  # Added .format() method for string formatting
         if k in self.__config:
             return bool(self.__config[k])
         return False
@@ -55,7 +55,7 @@ class Config:
 
         err = self.valid()
         if err is not None:
-            raise ConfigException("config", "Can't save invalid config: %s" % err)
+            raise ConfigException("config", "Can't save invalid config: {}".format(err))  # Added .format() method for string formatting
 
         try:
             cfg = self.__configfile
@@ -64,8 +64,8 @@ class Config:
             with open(cfg, "w") as f:
                 json.dump(self.__config, f)
 
-        except Exception, e:
-            print "[-] Failed to save config file %s" % e
+        except Exception as e:  # Replaced Exception, e with Exception as e
+            print("[-] Failed to save config file {}".format(e))  # Replaced print statement with function call
             raise ConfigException("config", e)
 
     def __repr__(self):
@@ -82,6 +82,6 @@ class ConfigException(Exception):
         self.msg = msg
 
     def __repr__(self):
-        return "<%s %s (%s)>" % (self.__class__.__name__, self.key, self.msg)
+        return "<{} {} ({})>".format(self.__class__.__name__, self.key, self.msg)  # Added .format() method for string formatting
 
 config = None
