@@ -36,7 +36,7 @@ class CorrelatorFactory(protocol.Factory):
 
 def main():
     from twisted.python import log
-    import common.config
+    from .common import config
 
     log.logfile=sys.stderr
     try:
