@@ -47,7 +47,9 @@ def main():
         print(config)
         sys.exit(1)
 
+    from opencanary_correlator.common import config
     config.config = config.Config(config.opts['config'])
+
 
     f = CorrelatorFactory()
     reactor.listenTCP(1514, f, interface=config.opts['ip'])
