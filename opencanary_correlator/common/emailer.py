@@ -39,7 +39,8 @@ def mandrill_send(to=None, subject=None, message=None, reply_to=None):
         if reply_to:
             message["headers"] = { "Reply-To": reply_to }
 
-        result = mandrill_client.messages.send(message=message, async=False, ip_pool='Main Pool')
+        result = mandrill_client.messages.send(message=message, asynchronous=False, ip_pool='Main Pool')
+
 
     except mandrill.Error as e:  # Replaced mandrill.Error, e with mandrill.Error as e
         print('A mandrill error occurred: {} - {}'.format(e.__class__, e))  # Added .format() method for string formatting
