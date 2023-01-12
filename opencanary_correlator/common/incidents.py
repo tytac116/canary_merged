@@ -1,9 +1,9 @@
 from twisted.internet.threads import deferToThread
 from opencanary_correlator.common.redismanager import *
 from opencanary_correlator.common.constants import LOG_PORT_SCAN_NET, LOG_PORT_SCAN_HOST
-from utils import current_time_offset
-from notifications import notify
-from logs import logger
+from .utils import current_time_offset
+from .notifications import notify
+from .logs import logger
 import simplejson
 import datetime
 import opencanary_correlator.common.config as c
@@ -105,7 +105,7 @@ class Incident(object):
         an incident decide how its log data is stored.
         """
 
-        if current_incident.has_key('logdata'):
+        if 'logdata' in current_incident:
             current_incident['logdata'] = simplejson.loads(current_incident['logdata'])
         else:
             current_incident['logdata'] = []
@@ -141,7 +141,7 @@ class Incident(object):
             current_incident['updated'] = True
 
             #add new log data to old incident
-            if self.data.has_key('logdata'):
+            if 'logdata' in self.data:
                 current_incident = self.add_log_data(current_incident)
 
             redis.hmset(current_incident_key, current_incident)
@@ -158,7 +158,7 @@ class Incident(object):
             self.data['notified'] = False
             self.data['updated'] = True
             self.data['description'] = self.DESCRIPTION
-            if self.data.has_key('logdata'):
+            if 'logdata' in self.data:
                 if type(self.data['logdata']) == list:
                     self.data['logdata'] = simplejson.dumps(self.data['logdata'])
                 else:
@@ -324,7 +324,7 @@ class IncidentHostPortScan(Incident):
 
     def add_log_data(self, current_incident):
         logger.debug('add_log_data(1)')
-        if current_incident.has_key('logdata'):
+        if 'logdata' in current_incident:
             logger.debug('add_log_data(2)')
             logger.debug(current_incident['logdata'])
             logger.debug(simplejson.loads(current_incident['logdata']))
@@ -349,7 +349,7 @@ class IncidentNetworkPortScan(Incident):
 
     def add_log_data(self, current_incident):
         logger.debug('network_add_log_data(1)')
-        if current_incident.has_key('logdata'):
+        if 'logdata' in current_incident:
             logger.debug('network_add_log_data(2)')
             logger.debug(current_incident['logdata'])
             logger.debug(simplejson.loads(current_incident['logdata']))
@@ -392,7 +392,7 @@ class IncidentFactory:
 
     @classmethod
     def create_incident(cls, type_, data=None):
-        print '{0}: {1}'.format(type_, data)
+        print('{0}: {1}'.format(type_, data))
         logger.debug('Creating incident type: {0}'.format(type_))
         if type_ == 'ftp.login_attempt':
             IncidentFTPLogin(data=data, write_object=True)
