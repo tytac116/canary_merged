@@ -27,7 +27,7 @@ logger = None
 # Impact of this is we don't support multiple loggers per process
 existing_logger_names = logging.getLogger().manager.loggerDict.keys()
 if len(existing_logger_names) > 0:
-    lgr = existing_logger_names[0]
+    lgr = list(existing_logger_names)[0]
     logger = logging.getLogger(lgr)
 
 
