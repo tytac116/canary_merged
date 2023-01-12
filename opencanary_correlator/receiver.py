@@ -47,8 +47,8 @@ def main():
         print(config)
         sys.exit(1)
 
-    from opencanary_correlator.common import config
-    config.config = config.Config(config.opts['config'])
+    opencanary_correlator.common.config.config = opencanary_correlator.common.config.Config(config.opts['config'])
+
 
 
     f = CorrelatorFactory()
