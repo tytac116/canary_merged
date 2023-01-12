@@ -12,19 +12,19 @@ setup(
     install_requires=[
         "simplejson",
         "cffi",
-        "docopt==0.4.0",
-        "httplib2==0.9.1",
-        "mandrill==1.0.57",
-        "pycparser==2.14",
+        "docopt",
+        "httplib2",
+        "mandrill",
+        "pycparser",
         "PyNaCl",
-        "pytz==2015.4",
-        "redis==2.10.3",
-        "requests==2.7.0",
-        "six==1.9.0",
-        "twilio==4.4.0",
-        "Twisted==15.2.1",
-        "wheel==0.24.0",
-        "zope.interface==4.1.2"
+        "pytz",
+        "redis",
+        "requests",
+        "six",
+        "twilio",
+        "Twisted",
+        "wheel",
+        "zope.interface"
     ],
     setup_requires=[
         'setuptools_git'
