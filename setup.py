@@ -2,7 +2,8 @@ import codecs
 import os.path
 from setuptools import setup, find_namespace_packages
 import sys
-
+from setuptools import setup, find_packages
+from opencanary_correlator import __version__
 
 def read(rel_path):
     here = os.path.abspath(os.path.dirname(__file__))
