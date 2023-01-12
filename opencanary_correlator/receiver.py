@@ -15,7 +15,7 @@ class CorrelatorOptions(usage.Options):
         if self.opts['config'] is None:
             conf = resource_filename(__name__, 'opencanary_correlator.conf')
             self.opts['config'] = conf
-            print >> sys.stderr, "Warning: no config file specified. Using the template config (which does not have any alerting configured):\n%s\n" % conf
+            print("Warning: no config file specified. Using the template config (which does not have any alerting configured):\n%s\n" % conf, file=sys.stderr)
 
 class CorrelatorReceiver(LineReceiver):
     delimiter = "\n"
@@ -25,8 +25,8 @@ class CorrelatorReceiver(LineReceiver):
         try:
             event = json.loads(line)
         except Exception as e:
-            print >> sys.stderr, "Failed to decode line"
-            print e
+            print("Failed to decode line", file=sys.stderr)
+            print(e)
             return
 
         process_device_report(event)
@@ -36,15 +36,15 @@ class CorrelatorFactory(protocol.Factory):
 
 def main():
     from twisted.python import log
-    from .common import config
+    from opencanary_correlator.common import config
 
     log.logfile=sys.stderr
     try:
         config = CorrelatorOptions()
         config.parseOptions()
-    except usage.UsageError, ue:
-        print >> sys.stderr, '%s:' % sys.argv[0], ue
-        print config
+    except usage.UsageError as ue:
+        print('%s:' % sys.argv[0], ue, file=sys.stderr)
+        print(config)
         sys.exit(1)
 
     common.config.config = common.config.Config(config.opts['config'])
