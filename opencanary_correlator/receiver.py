@@ -50,7 +50,6 @@ def main():
     opencanary_correlator.common.config.config = opencanary_correlator.common.config.Config(config.opts['config'])
 
 
-
     f = CorrelatorFactory()
     reactor.listenTCP(1514, f, interface=config.opts['ip'])
     reactor.run()
