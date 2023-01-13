@@ -69,7 +69,9 @@ elif [ "${cmd}" == "--version" ]; then
 elif [ "${cmd}" == "--correlator" ]; then
     IP=$2
     ConfigFile=$3
-    python3 -m opencanary_correlator.receiver --ip $IP --config $ConfigFile
+    python -m opencanary_correlator.receiver $IP $ConfigFile
+
+
 
 else
     usage
