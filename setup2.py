@@ -16,6 +16,7 @@ setup(
         "httplib2",
         "mandrill",
         "pycparser",
+        "pyparsing",
         "PyNaCl",
         "pytz",
         "redis",
