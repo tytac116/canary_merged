@@ -67,7 +67,7 @@ setup(
         ]
     ),
     include_package_data = True,
-    scripts=['bin/opencanaryd','bin/opencanary.tac','bin/opencanary-correlator'], #added script for correlator 
+    scripts=['bin/opencanaryd','bin/opencanary.tac'],
     platforms='any',
     classifiers=[
         "Development Status :: 5 - Production/Stable",
