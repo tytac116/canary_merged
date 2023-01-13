@@ -1,3 +1,4 @@
+
 import codecs
 import os.path
 from setuptools import setup, find_namespace_packages, find_packages
@@ -35,19 +36,7 @@ requirements = [
     'ntlmlib',
     'bcrypt',
     'setuptools',
-    'hpfeeds',
-    'cffi',
-    'docopt',
-    'httplib2',
-    'mandrill',
-    'pycparser',
-    'pyparsing',
-    'PyNaCl',
-    'pytz',
-    'redis',
-    'six',
-    'twilio',
-    'wheel',]
+    'hpfeeds']
 
 
 setup(
@@ -67,7 +56,7 @@ setup(
         ]
     ),
     include_package_data = True,
-    scripts=['bin/opencanaryd','bin/opencanary.tac','bin/opencanary-correlator'],
+    scripts=['bin/opencanaryd','bin/opencanary.tac'],
     platforms='any',
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -88,3 +77,37 @@ setup(
     ],
 )
 
+setup(
+    name='opencanary-correlator',
+    version=__version__,
+    url='http://www.thinkst.com/',
+    author='Thinkst Applied Research',
+    author_email='info@thinkst.com',
+    description='opencanary correlator',
+    install_requires=[
+        "simplejson",
+        "cffi",
+        "docopt",
+        "httplib2",
+        "mandrill",
+        "pycparser",
+        "pyparsing",
+        "PyNaCl",
+        "pytz",
+        "redis",
+        "requests",
+        "six",
+        "twilio",
+        "Twisted",
+        "wheel",
+        "zope.interface"
+    ],
+    setup_requires=[
+        'setuptools_git'
+    ],
+    license='BSD',
+    packages = find_packages(exclude="test"),
+    scripts=['bin/opencanary-correlator'],
+    platforms='any',
+    include_package_data=True,
+)
