@@ -1,4 +1,5 @@
-from twilio.rest import TwilioRestClient
+#from twilio.rest import TwilioRestClient
+from twilio.rest import Client
 from opencanary_correlator.common.logs import logger
 from opencanary_correlator.common.emailer import mandrill_send, send_email
 import opencanary_correlator.common.config as c
@@ -10,7 +11,7 @@ class SMS:
         AUTH_TOKEN  = c.config.getVal('twilio.auth_token', default='')
         from_ = c.config.getVal('twilio.from_number', default='')
 
-        client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+        client = Client(ACCOUNT_SID, AUTH_TOKEN)
 
 
         client.messages.create(
