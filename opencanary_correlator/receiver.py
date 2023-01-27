@@ -19,7 +19,7 @@ class CorrelatorOptions(usage.Options):
             print("Warning: no config file specified. Using the template config (which does not have any alerting configured):\n%s\n" % conf, file=sys.stderr)
 
 class CorrelatorReceiver(LineReceiver):
-    delimiter = "\n"
+    delimiter = "\n".encode()
     MAX_LENGTH = 16384
 
     def lineReceived(self, line):
