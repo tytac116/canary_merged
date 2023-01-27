@@ -1,7 +1,7 @@
 import sys
 import simplejson as json
 from pkg_resources import resource_filename
-import opencanary_correlator
+#import opencanary_correlator
 from twisted.protocols.basic import LineReceiver
 from twisted.python import usage
 from twisted.internet import protocol
