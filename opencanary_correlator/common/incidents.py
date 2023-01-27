@@ -70,7 +70,8 @@ class Incident(object):
         if not self.key:
             return False
 
-        redis.hmset(self.key, self.data)
+        for k, v in self.data.items():
+            redis.hset(self.key, k, v)
 
     def delete(self,):
         if not self.key:
@@ -125,11 +126,12 @@ class Incident(object):
         """
         now = current_time_offset()
         incident_key_prefix = self.INCIDENT_KEY_PREFIX + self.data['src_host']
-        incident_horizon = float(c.config.getVal(
-                                    self.CONFIG_INCIDENT_HORIZON,
-                                    default=c.config.getVal(
-                                              'console.incident_horizon',
-                                              default=60)))
+        #incident_horizon = float(c.config.getVal(
+        #                            self.CONFIG_INCIDENT_HORIZON,
+        #                            default=c.config.getVal(
+        #                                      'console.incident_horizon',
+        #                                      default=60)))
+        incident_horizon = float(60)
         current_incident_key = self.find_incident(key_prefix=incident_key_prefix,
                                               incident_horizon=incident_horizon)
 
@@ -144,7 +146,8 @@ class Incident(object):
             if 'logdata' in self.data:
                 current_incident = self.add_log_data(current_incident)
 
-            redis.hmset(current_incident_key, current_incident)
+            for k, v in current_incident:
+                redis.hset(current_incident_key, k, v)
             redis.zrem(KEY_INCIDENTS, current_incident_key)
             redis.zadd(KEY_INCIDENTS, now, current_incident_key)
         else:
@@ -154,17 +157,18 @@ class Incident(object):
             self.data['created'] = now
             self.data['events_list'] = repr(now)
             self.data['events_count'] = 1
-            self.data['acknowledged'] = False
-            self.data['notified'] = False
-            self.data['updated'] = True
+            self.data['acknowledged'] = int(False)
+            self.data['notified'] = int(False)
+            self.data['updated'] = int(True)
             self.data['description'] = self.DESCRIPTION
             if 'logdata' in self.data:
                 if type(self.data['logdata']) == list:
-                    self.data['logdata'] = simplejson.dumps(self.data['logdata'])
+                    self.data['logdata'] = simplejson.dumps(self.data['logdata']).encode()
                 else:
-                    self.data['logdata'] = simplejson.dumps([self.data['logdata']])
-            redis.hmset(incident_key, self.data)
-            redis.zadd(KEY_INCIDENTS, now, incident_key)
+                    self.data['logdata'] = simplejson.dumps([self.data['logdata']]).encode()
+            for k, v in self.data.items():
+                redis.hset(incident_key, k, v)
+            #redis.zadd(KEY_INCIDENTS, now, incident_key)
 
             deferToThread(notify, self)
 
@@ -435,3 +439,4 @@ if __name__ == '__main__':
     import pdb;pdb.set_trace()
     for data in test_events:
         IncidentFTPLogin(data=data, write_object=True)
+        
